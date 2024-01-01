@@ -222,3 +222,42 @@ Customer A's first purchase after becoming a member was curry <br>
 Customer B's first purchase after becoming a member was sushi <br>
 Customer C never became a member therefore he isn't in this table
 
+**7. Which item was purchased just before the customer became a member?**
+
+**Thoughts**
+- use the same CTE as question 6, with some slight changes
+- must use the WHERE clause to filter orders that happened before the ```member.join_date```
+- must partition and ORDER BY descending order dates, as we are looking to obtain the most recent order prior to becoming a member
+- SELECT the item that corresponds to rank 1, this is the latest order. 
+
+```sql
+with rk as 
+(
+select
+  s.customer_id,
+  m.product_name,
+  dense_rank() over (partition by customer_id order by order_date desc) as rk
+from sales s
+join menu m on
+  m.product_id = s.product_id
+join members mem on
+  s.customer_id = mem.customer_id
+where s.order_date < mem.join_date
+)
+
+select
+  customer_id as customer,
+  product_name as name
+from rk
+where rk = 1;
+```
+
+**Solution:**
+| customer | name |
+| - | - |
+| A | sushi |
+| A | curry |
+| B | sushi |
+
+Customer A's last order before becoming a member was both sushi and curry <br>
+Customer B's last order before becoming a member was sushi
