@@ -224,7 +224,7 @@ Customer C never became a member therefore he isn't in this table
 
 **7. Which item was purchased just before the customer became a member?**
 
-**Thoughts**
+**Thoughts:**
 - use the same CTE as question 6, with some slight changes
 - must use the WHERE clause to filter orders that happened before the ```member.join_date```
 - must partition and ORDER BY descending order dates, as we are looking to obtain the most recent order prior to becoming a member
@@ -259,5 +259,44 @@ where rk = 1;
 | A | curry |
 | B | sushi |
 
-Customer A's last order before becoming a member was both sushi and curry <br>
-Customer B's last order before becoming a member was sushi
+Before becoming members, 
+
+Customer A's last order was both sushi and curry <br>
+Customer B's last order was sushi
+
+**8. What is the total items and amount spent for each member before they became a member?**
+
+**Thoughts:**
+- Join all three tables
+- filter to only include orders from before the customer was a member (```order_date < member.join_date```)
+- COUNT all items purchased
+- SUM all the prices
+- GROUP BY each customer_id
+
+```sql
+select
+  s.customer_id as customer,
+  count(s.product_id) as total_items,
+  sum(price) as total_money_spent
+from sales s
+join menu m on
+  s.product_id = m.product_id
+join members mem on
+  s.customer_id = mem.customer_id
+where s.order_date < mem.join_date
+group by s.customer_id
+order by s.customer_id;
+```
+
+**Solution:**
+| customer | total_items | money_spent |
+| - | - | - |
+| A | 2 | 25 | 
+| B | 3 | 40 |
+
+Before becoming members,
+
+Customer A bought 2 items totaling $25 <br>
+Customer B bought 3 items totaling $40
+
+**9. If each $1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?**
