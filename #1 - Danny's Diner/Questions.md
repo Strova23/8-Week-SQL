@@ -300,3 +300,77 @@ Customer A bought 2 items totaling $25 <br>
 Customer B bought 3 items totaling $40
 
 **9. If each $1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?**
+
+**Thoughts:**
+- Convert all prices to points, $1 = 10 points with sushi being $1 = 20 points
+- SUM all points for each customer
+- GROUP BY customer_id
+
+```sql
+with points as 
+(
+select
+  *,
+  case
+  when product_id = 1 then price*20
+  else price*10
+  end as points
+from menu
+)
+select
+  s.customer_id as customer,
+  sum(points) as points
+from sales s
+join points p on
+  s.product_id = p.product_id
+group by customer_id;
+```
+
+**Solution:**
+| customer | points | 
+| - | - |
+| A | 860 |
+| B | 940 | 
+| C | 360 |
+
+Customer A had 860 total points <br>
+Customer B had 940 total points <br>
+Customer C had 360 total points 
+
+**10. In the first week after a customer joins the program (including their join date) they earn 2x points on all items, not just sushi - how many points do customers A and B have at the end of January?**
+
+**Thoughts:**
+- Cumulative sum until the end of January
+- Use _datediff()_ and _between_ to determine a 1 week timeframe between ```member.join_date``` and ```order_date```
+- triple join to get all the necessary information in 1 table.
+- GROUP BY customer_id
+
+```sql
+select
+  s.customer_id as customer,
+  sum(case
+    when datediff(mem.join_date, s.order_date) between 0 and 7 then m.price*20
+    when m.product_id = 1 then m.price*20
+    else m.price*10
+    end) as points
+from sales s
+join members mem on
+  s.customer_id = mem.customer_id
+join menu m on
+  s.product_id = m.product_id
+where s.order_date >= mem.join_date and 
+  s.order_date < cast('2021-01-31' as date)
+group by s.customer_id
+order by s.customer_id;
+```
+
+**Solution:**
+| customer | points |
+| - | - |
+| A | 660 | 
+| B | 320 |
+
+At the end of January, 
+
+Customer A had 660 total points <br>
+Customer B had 320 total points 
