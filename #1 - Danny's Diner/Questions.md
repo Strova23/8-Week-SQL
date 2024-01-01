@@ -132,7 +132,7 @@ select
   count(s.product_id) as amount
 from menu m
 join sales s on
-	s.product_id = m.product_id
+  s.product_id = m.product_id
 group by m.product_name
 order by count(s.product_id) desc limit 1;
 ```
@@ -145,3 +145,45 @@ order by count(s.product_id) desc limit 1;
 The most purchased item on the menu was ramen, which was purchased 8 times. 
 
 **5. Which item was the most popular for each customer?**
+
+**Thoughts:**
+- create a CTE using _dense_rank()_ partitioning by each customer to determine how many times they ordered each menu item
+- Order by desc, limit 1
+- GROUP BY ```customer_id``` and ```product_name```
+
+```sql
+with rk as 
+(
+select
+  s.customer_id,
+  m.product_name,
+  count(s.product_id) as amount,
+  dense_rank() over (partition by s.customer_id order by count(s.product_id) desc) as rk
+from menu m
+join sales s on
+  s.product_id = m.product_id
+group by s.customer_id, m.product_name
+)
+
+select customer_id as customer, product_name as name, amount
+from rk
+where rk = 1;
+```
+
+**Solution:**
+| customer | name | amount |
+| - | - | - |
+| A | ramen | 3 | 
+| B | curry | 2 | 
+| B | sushi | 2 | 
+| B | ramen | 2 |
+| C | ramen | 3 |
+
+Customer A's favorite item was ramen
+Customer C's favorite item was also ramen
+Customer B enjoyed all the items equally
+
+**6. Which item was purchased first by the customer after they became a member?**
+
+
+
