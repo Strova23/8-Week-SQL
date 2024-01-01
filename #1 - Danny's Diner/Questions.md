@@ -118,4 +118,30 @@ where rk = 1;
 Customer A's first order was both sushi and curry <br>
 Customer B's first order was curry <br>
 Customer C's first order was ramen
- 
+
+**4. What is the most purchased item on the menu and how many times was it purchased by all customers?**
+
+**Thoughts:**
+- Count how many times each product was ordered
+- Order in descending order
+- Limit 1
+
+```sql
+select
+  m.product_name as product,
+  count(s.product_id) as amount
+from menu m
+join sales s on
+	s.product_id = m.product_id
+group by m.product_name
+order by count(s.product_id) desc limit 1;
+```
+
+**Solution:**
+| product | amount |
+| - | - |
+| ramen | 8 |
+
+The most purchased item on the menu was ramen, which was purchased 8 times. 
+
+**5. Which item was the most popular for each customer?**
