@@ -3,7 +3,7 @@
 **1. What is the total amount each customer spent at the restaurant?**
 
 **Thoughts:**
-- need to use 'group by' on the primary key (```customer_id```)
+- need to use GROUP BY on the primary key (```customer_id```)
 - merge ```sales``` and ```menu``` table together to create a table that includes both ```customer_id``` and ```price```
 
 ```sql
@@ -31,8 +31,8 @@ Customer C spent $36
 **2. How many days has each customer visited the restaurant?**
 
 **Thoughts:**
-- group on the unique primary key (```customer_id```)
-- count each **UNIQUE** day a customer came
+- GROUP BY the unique primary key (```customer_id```)
+- COUNT each **UNIQUE** day a customer came
 
 ```sql
 select
@@ -122,9 +122,9 @@ Customer C's first order was ramen
 **4. What is the most purchased item on the menu and how many times was it purchased by all customers?**
 
 **Thoughts:**
-- Count how many times each product was ordered
-- Order in descending order
-- Limit 1
+- COUNT how many times each product was ordered
+- ORDER BY descending order
+- LIMIT 1
 
 ```sql
 select
@@ -148,7 +148,7 @@ The most purchased item on the menu was ramen, which was purchased 8 times.
 
 **Thoughts:**
 - create a CTE using _dense_rank()_ partitioning by each customer to determine how many times they ordered each menu item
-- Order by desc, limit 1
+- ORDER BY desc, LIMIT 1
 - GROUP BY ```customer_id``` and ```product_name```
 
 ```sql
@@ -179,11 +179,46 @@ where rk = 1;
 | B | ramen | 2 |
 | C | ramen | 3 |
 
-Customer A's favorite item was ramen
-Customer C's favorite item was also ramen
+Customer A's favorite item was ramen <br>
+Customer C's favorite item was also ramen <br>
 Customer B enjoyed all the items equally
 
 **6. Which item was purchased first by the customer after they became a member?**
 
+**Thoughts:**
+- need to combine all 3 tables (2 joins)
+- like the previous questions, create a CTE and use _dense_rank()_ to rank when each item was ordered from earliest to latest
+- Add a WHERE clause to filter members by only including orders that are after their ```member.join_date```
+- SELECT the first item where the row/rank is 1 as this indicates the first purchase after becoming a member
 
+```sql
+with rk as 
+(
+select
+  s.customer_id,
+  m.product_name,
+  dense_rank() over (partition by customer_id order by order_date) as rk
+from sales s
+join menu m on
+  m.product_id = s.product_id
+join members mem on
+  s.customer_id = mem.customer_id
+where s.order_date >= mem.join_date
+)
+select
+  customer_id as customer,
+  product_name as name
+from rk
+where rk = 1;
+```
+
+**Solution:**
+| customer | name |
+| - | - |
+| A | curry |
+| B | sushi |
+
+Customer A's first purchase after becoming a member was curry <br>
+Customer B's first purchase after becoming a member was sushi <br>
+Customer C never became a member therefore he isn't in this table
 
