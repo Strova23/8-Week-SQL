@@ -128,4 +128,4 @@ group by runner_id;
 |3|50|
 
 ### 📺[Pizza Metrics](https://github.com/Strova23/8-Week-SQL/blob/main/%232%20-%20Pizza%20Runner/Pizza%20Metrics.md)
-### [Price Analysis]()
+### 💰[Price Analysis](https://github.com/Strova23/8-Week-SQL/blob/main/%232%20-%20Pizza%20Runner/Price%20Analysis.md)
