@@ -168,3 +168,7 @@ group by weekday;
 |Thursday|3|
 |Saturday|5|
 |Friday|1|
+
+### 🧍[Customer and Runner Experience](https://github.com/Strova23/8-Week-SQL/blob/main/%232%20-%20Pizza%20Runner/Customer%20and%20Runner%20Experience.md)
+### 💰[Price Analysis](https://github.com/Strova23/8-Week-SQL/blob/main/%232%20-%20Pizza%20Runner/Price%20Analysis.md)
+
