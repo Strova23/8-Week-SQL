@@ -97,7 +97,7 @@ from customer_orders
 6. What was the average speed for each runner for each delivery and do you notice any trend for these values?
 7. What is the successful delivery percentage for each runner?\
 
-**SOLUTION**
+[**SOLUTION**](https://github.com/Strova23/8-Week-SQL/blob/main/%232%20-%20Pizza%20Runner/Customer%20and%20Runner%20Experience.md)
 
 ### 💰 Price Analysis
 1. If a Meat Lovers pizza costs $12 and Vegetarian costs $10 and there were no charges for changes - how much money has Pizza Runner made so far if there are no delivery fees?
@@ -105,4 +105,4 @@ from customer_orders
 - Add cheese is $1 extra
 3. If a Meat Lovers pizza was $12 and Vegetarian $10 fixed prices with no cost for extras and each runner is paid $0.30 per kilometre traveled - how much money does Pizza Runner have left over after these deliveries?
 
-**SOLUTION**
+[**SOLUTION**](https://github.com/Strova23/8-Week-SQL/blob/main/%232%20-%20Pizza%20Runner/Price%20Analysis.md)
