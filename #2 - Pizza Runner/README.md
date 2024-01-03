@@ -86,7 +86,7 @@ from customer_orders
 9. What was the total volume of pizzas ordered for each hour of the day?
 10. What was the volume of orders for each day of the week?
 
-**SOLUTION**
+[**SOLUTION**](https://github.com/Strova23/8-Week-SQL/blob/main/%232%20-%20Pizza%20Runner/Pizza%20Metrics.md)
 
 ### 🧍 Runner and Customer Experience
 1. How many runners signed up for each 1 week period? (i.e. week starts 2021-01-01)
@@ -96,20 +96,6 @@ from customer_orders
 5. What was the difference between the longest and shortest delivery times for all orders?
 6. What was the average speed for each runner for each delivery and do you notice any trend for these values?
 7. What is the successful delivery percentage for each runner?\
-
-**SOLUTION**
-
-### 🍅 Ingredient Optimization
-1. What are the standard ingredients for each pizza?
-2. What was the most commonly added extra?
-3. What was the most common exclusion?
-4. Generate an order item for each record in the customers_orders table in the format of one of the following:
-- Meat Lovers
-- Meat Lovers - Exclude Beef
-- Meat Lovers - Extra Bacon
-- Meat Lovers - Exclude Cheese, Bacon - Extra Mushroom, Peppers
-5. Generate an alphabetically ordered comma separated ingredient list for each pizza order from the customer_orders table and add a 2x in front of any relevant ingredients
-6. What is the total quantity of each ingredient used in all delivered pizzas sorted by most frequent first?
 
 **SOLUTION**
 
