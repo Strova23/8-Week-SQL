@@ -73,7 +73,7 @@ join new_runner_orders ro on
 where cancellation is null
 group by customer_id;
 ```
-**Solution**
+**Solution:**
 |customer_id|avg_distance|
 |-|-|
 |101|20|
@@ -83,3 +83,46 @@ group by customer_id;
 |105|25|
 
 **5. What was the difference between the longest and shortest delivery times for all orders?**
+```sql
+select
+  max(duration) as longest,
+  min(duration) as shortest,
+  max(duration) - min(duration) as difference
+from new_runner_orders;
+```
+**Solution:**
+|longest|shortest|difference|
+|-|-|-|
+|40|10|30|
+
+**6.  What was the average speed for each runner for each delivery and do you notice any trend for these values?**
+```sql
+select
+  runner_id,
+  round(avg(60 * distance / duration), 0) as "speed (km/h)"
+from new_runner_orders
+group by runner_id;
+```
+**Solution:**
+|runner_id|speed(km/h)|
+|-|-|
+|1|46|
+|2|63|
+|3|40|
+
+**7. What is the successful delivery percentage for each runner?**
+```sql
+select
+  runner_id,
+  round(100 * sum(case
+    when distance = 0 then 0
+    else 1 end) / count(*), 0) as success_%
+from new_runner_orders
+group by runner_id;
+```
+**Solution:**
+|runner_id|success_%|
+|-|-|
+|1|100|
+|2|75|
+|3|50|
