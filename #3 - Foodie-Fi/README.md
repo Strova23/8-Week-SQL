@@ -25,4 +25,4 @@ Danny wanted to create a new streaming service that only has food-related conten
 10. Can you further breakdown this average value into 30 day periods (i.e. 0-30 days, 31-60 days etc)
 11. How many customers downgraded from a pro monthly to a basic monthly plan in 2020?
 
-**SOLUTION**
+[**SOLUTION**](https://github.com/Strova23/8-Week-SQL/blob/main/%233%20-%20Foodie-Fi/Data%20Analysis.md)
