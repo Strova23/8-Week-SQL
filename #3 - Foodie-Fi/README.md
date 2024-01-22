@@ -12,6 +12,21 @@ Danny wanted to create a new streaming service that only has food-related conten
 
 <img src="https://i.gyazo.com/a9472ead2139fab73dc6b7a7cd461055.png">
 
+## Table Transformation
+We can join both tables together to create a better image of the journey each customer has gone through and when they upgraded to each plan. 
+
+```sql
+create temporary table all_data as
+select
+  customer_id,
+  plan_name,
+  price,
+  start_date
+from subscriptions s
+left join plans p on
+  p.plan_id = s.plan_id;
+```
+
 ## 📓Data Analysis Questions
 1. How many customers has Foodie-Fi ever had?
 2. What is the monthly distribution of trial plan start_date values for our dataset - use the start of the month as the group by value
